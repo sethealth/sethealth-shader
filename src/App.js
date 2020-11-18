@@ -1,6 +1,6 @@
 import './App.css';
 import { ControlledEditor } from "@monaco-editor/react";
-import { SetControlColormap, SetInputRange, SetProgressBar, SetViewVolumetric } from '@sethealth/react';
+import { SetControlColormap, SetIcon, SetInputRange, SetProgressBar, SetViewVolumetric } from '@sethealth/react';
 import { useState } from 'react';
 import { CODE } from './code';
 import useDebounce from './debounce';
@@ -32,7 +32,8 @@ export default function App() {
   return (
     <div className="App">
       <header>
-        Sethealth Shader Test
+        <SetIcon className="logo" name="sethealth"/>
+        Sethealth Shader Playground
       </header>
       {workspace && (
         <>

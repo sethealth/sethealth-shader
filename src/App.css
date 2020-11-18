@@ -15,6 +15,11 @@ header {
   box-sizing: border-box;
 }
 
+.logo {
+  margin-right: 15px;
+  font-size: 21px;
+}
+
 .load-button {
   margin: 20px;
   border: 6px solid currentColor;

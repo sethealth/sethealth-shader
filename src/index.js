@@ -4,6 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import * as sethealth from '@sethealth/core';
+
+sethealth.initialize(
+  "pub_sethealth_NFpn4YKgwUzesPjH5jCStCTmKRIwrWxCuMbiMxGOLJE="
+);
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

@@ -16,6 +16,7 @@ const COLORMAP  = {
 };
 
 export default function App() {
+  
   const [workspace, setWorkspace] = useState(undefined);
   const [loading, setLoading] = useState();
   const [shader, setShader] = useState(CODE);
@@ -104,7 +105,7 @@ export default function App() {
         <SetProgressBar value={loading}/>
       )}
       {!workspace && (
-        <button onClick={async () => {
+        <button className="load-button" onClick={async () => {
           const result = await sethealth.med.loadFromSource({
             type: 'nrrd',
             input: MEDICAL_IMAGE,
@@ -115,7 +116,7 @@ export default function App() {
             setWorkspace(workspace);
           }
         }}>
-          Load
+          Start
         </button>
       )}
     </div>

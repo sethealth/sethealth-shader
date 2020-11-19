@@ -99,3 +99,9 @@ a:hover {
   align-items: center;
   gap: 5px;
 }
+
+@media screen and (max-width: 900px) {
+  .sidemenu {
+    display: none;
+  }
+}

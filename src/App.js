@@ -123,7 +123,7 @@ export default function App() {
             </select>
           )}
           <nav className="top-menu">
-            <a class="link" href="https://docs.set.health">
+            <a class="link" href="https://docs.set.health/docs/guides/custom-shaders">
               <SetIcon name="document"></SetIcon>
               Docs
             </a>

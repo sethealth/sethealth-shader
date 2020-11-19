@@ -12,7 +12,7 @@ const prefix = "#";
 
 const COLORMAP = {
   type: 'materials',
-  name: 'initial',
+  name: 'Initial',
   materials: [
     {
       name: "Bone",

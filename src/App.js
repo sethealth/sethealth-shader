@@ -11,22 +11,60 @@ const MEDICAL_IMAGE = "https://public1-eu-sethealth.ams3.cdn.digitaloceanspaces.
 const prefix = "#";
 
 const COLORMAP = {
-  type: 'materials',
-  name: 'Initial',
+  type: "materials",
+  name: "Bones",
   materials: [
     {
+      name: "Skin",
+      from: -200,
+      to: 150,
+      color: [242, 197, 165, 255],
+      disabled: true,
+    },
+    {
+      name: "Tendons",
+      from: 85,
+      to: 90,
+      color: [255, 90, 152, 255],
+      disabled: true,
+    },
+    {
+      name: "Tissues",
+      from: 150,
+      to: 250,
+      color: [180, 90, 90, 240],
+    },
+    // {
+    //   name: 'Lung Tissues',
+    //   HUmin: -700,
+    //   HUmax: -600,
+    //   color: [231, 50, 120, 40],
+    // },
+    // {
+    //   name: 'Lung Surface',
+    //   HUmin: -600,
+    //   HUmax: -550,
+    //   color: [203, 195, 255, 200],
+    // },
+    {
       name: "Bone",
-      from: 400,
-      to: 2000,
-      color: [255,255,255,255],
-    }
-  ]
+      from: 250,
+      to: 1700,
+      color: [254, 252, 231, 255],
+    },
+    {
+      name: "Metal",
+      from: 2000,
+      to: 3000,
+      color: [180, 180, 255, 255],
+    },
+  ],
 };
 
 const getInitialState = () => {
   let fragment = getFragment();
   if (fragment === "") {
-    fragment = "max-intensity";
+    fragment = "lighting";
   }
   if (fragment in SHADERS) {
     return {
@@ -65,7 +103,7 @@ export default function App() {
   const [specularLight, setSpecularLight] = useState(state.specularLight);
   const [cutLow, setCutLow] = useState(state.cutLow);
   const [cutHigh, setCutHigh] = useState(state.cutHigh);
-  const debouncedShader = useDebounce(shader, 800);
+  const debouncedShader = useDebounce(shader, 500);
 
   useEffect(() => {
     async function load() {
@@ -123,7 +161,7 @@ export default function App() {
             </select>
           )}
           <nav className="top-menu">
-            <a class="link" target="_blank" href="https://docs.set.health/docs/guides/custom-shaders">
+            <a class="link" target="_blank" rel="noreferrer" href="https://docs.set.health/docs/guides/custom-shaders">
               <SetIcon name="document"></SetIcon>
               Docs
             </a>

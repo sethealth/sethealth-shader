@@ -149,6 +149,7 @@ export default function App() {
             />
             <div className="sidemenu">
               <SetControlColormap
+                className="colormap"
                 colormaps="all"
                 colormap={colormap}
                 onSetChange={(ev) => setColormap(ev.detail)}

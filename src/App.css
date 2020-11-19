@@ -68,6 +68,10 @@ header {
   backdrop-filter: blur(20px);
 }
 
+.colormap::part(colormap) {
+  border-radius: 3px;
+}
+
 select {
   margin-left: 20px;
 }

@@ -103,7 +103,9 @@ export default function App() {
   return (
     <div className="App">
         <header>
-          <SetIcon className="logo" name="sethealth"/>
+          <a href="https://set.health" className="logo" >
+            <SetIcon name="sethealth"/>
+          </a>
           Sethealth Shader Playground
           {workspace && (
             <select value={shaderName} onChange={(ev) => {
@@ -120,6 +122,12 @@ export default function App() {
               <option value="custom" disabled>Custom</option>
             </select>
           )}
+          <nav className="top-menu">
+            <a class="link" href="https://docs.set.health">
+              <SetIcon name="document"></SetIcon>
+              Docs
+            </a>
+          </nav>
         </header>
       {workspace && (
         <>

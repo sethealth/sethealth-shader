@@ -11,12 +11,12 @@ header {
   display: flex;
   align-items: center;
   font-weight: 600;
-  padding: 0 20px;
+  padding: 0 10px;
   box-sizing: border-box;
 }
 
 .logo {
-  margin-right: 15px;
+  margin-right: 10px;
   font-size: 21px;
 }
 
@@ -74,4 +74,28 @@ header {
 
 select {
   margin-left: 20px;
+  border-radius: 5px;
+}
+
+.top-menu {
+  flex: 1;
+  text-align: right;
+}
+
+a {
+  color: white;
+  padding: 5px 15px;
+  text-decoration: none;
+  border-radius: 20px;
+}
+
+a:hover {
+  background: #3907a5;
+}
+
+.link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }

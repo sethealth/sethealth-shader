@@ -56,7 +56,7 @@ header {
   --color-middle: rgba(40, 38, 44, 1);
   --color-middle-contrast: rgba(255, 255, 255, 1);
 
-  background: rgba(0, 0, 0, 0);
+  background: rgba(0, 0, 0, 0.588);
   width: 195px;
   color: white;
   padding: 40px 5px;

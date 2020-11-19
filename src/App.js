@@ -174,7 +174,6 @@ export default function App() {
               value={shader}
             />
             <SetViewVolumetric
-              pixelRatio={0.5}
               className="volumetric"
               ambientLight={ambientLight}
               diffuseLight={directLight}

@@ -40,7 +40,7 @@ const getInitialState = () => {
       cutHigh: MAX_HU,
     };
   } else {
-    return JSON.parse(atob(fragment));;
+    return JSON.parse(atob(fragment));
   }
 }
 
@@ -107,8 +107,11 @@ export default function App() {
           {workspace && (
             <select value={shaderName} onChange={(ev) => {
               const value = ev.target.value;
-              setShaderName(value);
-              setShader(SHADERS[value]);
+              const code = SHADERS[value];
+              if (code) {
+                setShaderName(value);
+                setShader(code);
+              }
             }}>
               <option value="max-intensity">Max-intensity</option>
               <option value="basic">Basic</option>

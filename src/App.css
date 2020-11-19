@@ -40,11 +40,12 @@ header {
   height: calc(100vh - 40px);
   display: flex;
   box-sizing: border-box;
+  position: relative;
 }
 
 .volumetric {
   height: 100%;
-  width: 45vw;
+  width: 60vw;
   box-sizing: border-box;
 }
 
@@ -55,9 +56,18 @@ header {
   --color-middle: rgba(40, 38, 44, 1);
   --color-middle-contrast: rgba(255, 255, 255, 1);
 
-  background: black;
-  width: 250px;
+  background: rgba(0, 0, 0, 0);
+  width: 195px;
   color: white;
-  padding: 40px 20px;
+  padding: 40px 5px;
   box-sizing: border-box;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  backdrop-filter: blur(20px);
+}
+
+select {
+  margin-left: 20px;
 }

@@ -1,45 +1,127 @@
 import './App.css';
 import { ControlledEditor } from "@monaco-editor/react";
 import { SetControlColormap, SetIcon, SetInputRange, SetProgressBar, SetViewVolumetric } from '@sethealth/react';
-import { useState } from 'react';
-import { CODE } from './code';
+import { useEffect, useMemo, useState } from 'react';
+import SHADERS from './code';
 import useDebounce from './debounce';
 import * as sethealth from '@sethealth/core';
 
 const MEDICAL_IMAGE = "https://public1-eu-sethealth.ams3.cdn.digitaloceanspaces.com/public/ankle.nrrd.gz";
 
-const COLORMAP  = {
-  type: 'linear',
+const prefix = "#";
+
+const COLORMAP = {
+  type: 'materials',
   name: 'initial',
-  color: [0,0,0,255],
-  colorEnd: [255, 255, 255,255],
+  materials: [
+    {
+      name: "Bone",
+      HUmin: 400,
+      HUmax: 2000,
+      color: [255,255,255,255],
+    }
+  ]
+};
+
+const getInitialState = () => {
+  let fragment = getFragment();
+  if (fragment === "") {
+    fragment = "max-intensity";
+  }
+  if (fragment in SHADERS) {
+    return {
+      shader: SHADERS[fragment],
+      shaderName: fragment,
+      colormap: COLORMAP,
+      ambientLight: 0.3,
+      directLight: 0.1,
+      specularLight: 0.1,
+      cutLow: MIN_HU,
+      cutHigh: MAX_HU,
+    };
+  } else {
+    return JSON.parse(atob(fragment));;
+  }
+}
+
+const getFragment = () => {
+  const fragment = window.location.hash;
+  if (fragment.startsWith(prefix)) {
+    return fragment.slice(prefix.length);
+  }
+  return "";
 };
 
 export default function App() {
-  
+
+  const state = useMemo(() => getInitialState(), []);
   const [workspace, setWorkspace] = useState(undefined);
   const [loading, setLoading] = useState();
-  const [shader, setShader] = useState(CODE);
-  const [colormap, setColormap] = useState(COLORMAP);
-  const [ambientLight, setAmbientLight] = useState(0.1);
-  const [directLight, setDirectLight] = useState(0.1);
-  const [specularLight, setSpecularLight] = useState(0.1);
-  const [cutLow, setCutLow] = useState(MIN_HU);
-  const [cutHigh, setCutHigh] = useState(MAX_HU);
-
+  const [shader, setShader] = useState(state.shader);
+  const [shaderName, setShaderName] = useState(state.shaderName);
+  const [colormap, setColormap] = useState(state.colormap);
+  const [ambientLight, setAmbientLight] = useState(state.ambientLight);
+  const [directLight, setDirectLight] = useState(state.directLight);
+  const [specularLight, setSpecularLight] = useState(state.specularLight);
+  const [cutLow, setCutLow] = useState(state.cutLow);
+  const [cutHigh, setCutHigh] = useState(state.cutHigh);
   const debouncedShader = useDebounce(shader, 800);
+
+  useEffect(() => {
+    async function load() {
+      const result = await sethealth.med.loadFromSource({
+        type: 'nrrd',
+        input: MEDICAL_IMAGE,
+      }, (progress) => setLoading(progress));
+      if (!result.error) {
+        const handler = result.value[0];
+        const workspace = await sethealth.workspace.create(handler);
+        setWorkspace(workspace);
+      }
+    }
+    load();
+  }, []);
+
+  useEffect(() => {
+    if (shaderName === "custom") {
+      const state = JSON.stringify({
+        shader: shader,
+        colormap,
+        ambientLight,
+        directLight,
+        specularLight,
+        cutLow,
+        cutHigh,
+      });
+      window.location.hash = prefix + btoa(state);
+    } else {
+      window.location.hash = prefix + shaderName;
+    }
+  }, [shaderName, colormap, ambientLight, directLight, specularLight, cutLow, cutHigh, shader]);
 
   return (
     <div className="App">
-      <header>
-        <SetIcon className="logo" name="sethealth"/>
-        Sethealth Shader Playground
-      </header>
+        <header>
+          <SetIcon className="logo" name="sethealth"/>
+          Sethealth Shader Playground
+          {workspace && (
+            <select value={shaderName} onChange={(ev) => {
+              const value = ev.target.value;
+              setShaderName(value);
+              setShader(SHADERS[value]);
+            }}>
+              <option value="max-intensity">Max-intensity</option>
+              <option value="basic">Basic</option>
+              <option value="lighting">Lighting</option>
+              <option value="custom" disabled>Custom</option>
+            </select>
+          )}
+        </header>
       {workspace && (
         <>
           <div className="panel">
             <ControlledEditor
-              width="55vw"
+              width="40vw"
               height="100%"
               language="cpp"
               options={{
@@ -48,7 +130,8 @@ export default function App() {
                 }
               }}
               onChange={(_, value) => {
-                setShader(value)
+                setShaderName("custom");
+                setShader(value);
               }}
               value={shader}
             />
@@ -67,6 +150,7 @@ export default function App() {
             <div className="sidemenu">
               <SetControlColormap
                 colormaps="all"
+                colormap={colormap}
                 onSetChange={(ev) => setColormap(ev.detail)}
               />
               <SetInputRange
@@ -104,21 +188,6 @@ export default function App() {
       )}
       {loading !== undefined && loading < 1.0 && (
         <SetProgressBar value={loading}/>
-      )}
-      {!workspace && (
-        <button className="load-button" onClick={async () => {
-          const result = await sethealth.med.loadFromSource({
-            type: 'nrrd',
-            input: MEDICAL_IMAGE,
-          }, (progress) => setLoading(progress));
-          if (!result.error) {
-            const handler = result.value[0];
-            const workspace = await sethealth.workspace.create(handler);
-            setWorkspace(workspace);
-          }
-        }}>
-          Start
-        </button>
       )}
     </div>
   );

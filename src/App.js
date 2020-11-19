@@ -16,8 +16,8 @@ const COLORMAP = {
   materials: [
     {
       name: "Bone",
-      HUmin: 400,
-      HUmax: 2000,
+      from: 400,
+      to: 2000,
       color: [255,255,255,255],
     }
   ]

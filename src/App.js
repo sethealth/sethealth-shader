@@ -33,9 +33,9 @@ const getInitialState = () => {
       shader: SHADERS[fragment],
       shaderName: fragment,
       colormap: COLORMAP,
-      ambientLight: 0.3,
-      directLight: 0.1,
-      specularLight: 0.1,
+      ambientLight: 0.25,
+      directLight: 0.60,
+      specularLight: 0.24,
       cutLow: MIN_HU,
       cutHigh: MAX_HU,
     };

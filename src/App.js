@@ -86,6 +86,7 @@ export default function App() {
     if (shaderName === "custom") {
       const state = JSON.stringify({
         shader: shader,
+        shaderName: "custom",
         colormap,
         ambientLight,
         directLight,

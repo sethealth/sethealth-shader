@@ -34,29 +34,17 @@ const COLORMAP = {
       to: 250,
       color: [180, 90, 90, 240],
     },
-    // {
-    //   name: 'Lung Tissues',
-    //   HUmin: -700,
-    //   HUmax: -600,
-    //   color: [231, 50, 120, 40],
-    // },
-    // {
-    //   name: 'Lung Surface',
-    //   HUmin: -600,
-    //   HUmax: -550,
-    //   color: [203, 195, 255, 200],
-    // },
     {
       name: "Bone",
       from: 250,
-      to: 1700,
-      color: [254, 252, 231, 255],
+      to: 1600,
+      color: [254, 252, 231, 150],
     },
     {
       name: "Metal",
-      from: 2000,
+      from: 1600,
       to: 3000,
-      color: [180, 180, 255, 255],
+      color: [160, 0, 255, 255],
     },
   ],
 };

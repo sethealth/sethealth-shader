@@ -167,6 +167,7 @@ export default function App() {
                 height="100%"
                 language="cpp"
                 options={{
+                  'scrollBeyondLastLine': false,
                   'minimap': {
                     enabled: false
                   }

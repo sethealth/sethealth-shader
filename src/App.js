@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import SHADERS from './code';
 import useDebounce from './debounce';
 import * as sethealth from '@sethealth/core';
+import ResizePanel from "react-resize-panel";
 
 const MEDICAL_IMAGE = "https://public1-eu-sethealth.ams3.cdn.digitaloceanspaces.com/public/ankle.nrrd.gz";
 
@@ -149,7 +150,7 @@ export default function App() {
             </select>
           )}
           <nav className="top-menu">
-            <a class="link" target="_blank" rel="noreferrer" href="https://docs.set.health/docs/guides/custom-shaders">
+            <a className="link" target="_blank" rel="noreferrer" href="https://docs.set.health/docs/guides/custom-shaders">
               <SetIcon name="document"></SetIcon>
               Docs
             </a>
@@ -158,21 +159,25 @@ export default function App() {
       {workspace && (
         <>
           <div className="panel">
-            <ControlledEditor
-              width="40vw"
-              height="100%"
-              language="cpp"
-              options={{
-                'minimap': {
-                  enabled: false
-                }
-              }}
-              onChange={(_, value) => {
-                setShaderName("custom");
-                setShader(value);
-              }}
-              value={shader}
-            />
+            <ResizePanel direction="e" style={{
+              width: '50%',
+            }} >
+              <ControlledEditor
+                width="100%"
+                height="100%"
+                language="cpp"
+                options={{
+                  'minimap': {
+                    enabled: false
+                  }
+                }}
+                onChange={(_, value) => {
+                  setShaderName("custom");
+                  setShader(value);
+                }}
+                value={shader}
+              />
+            </ResizePanel>
             <SetViewVolumetric
               className="volumetric"
               ambientLight={ambientLight}

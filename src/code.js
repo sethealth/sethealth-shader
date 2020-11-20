@@ -41,7 +41,6 @@ void main() {
 
 
 const LIGHTING = `
-
 void main() {
   Ray ray = computeRay();
 

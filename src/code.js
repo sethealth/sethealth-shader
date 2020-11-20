@@ -1,35 +1,44 @@
 
 const MAX_INTENSITY = `
 void main() {
-    // Compute ray
-    Ray ray = computeRay();
+  // Internally this function takes all the relevant input and
+  // prepares a high level "Ray" struct with all the relevant information
+  // for our ray casting, such as: direction, number of steps, delta vector...
+  Ray ray = computeRay();
 
-    // Early return if we are outside the volume
-    if (ray.outside) {
-        gl_FragColor = vec4(0.0);
-        return;
-    }
+  // Early return if we are outside the volume
+  if (ray.outside) {
+    // If we are outside the volume, just set color to black (0,0,0,0) and return early.
+    gl_FragColor = vec4(0.0);
+    return;
+  }
 
-    // Initialize cursor
-    vec3 cursor = ray.start;
-    float density = 0.0;
-    float maxDensity = 0.0;
+  // Initialize a cursor variable at the start
+  vec3 cursor = ray.start;
 
-    // Walk N steps, advancing our cursor
-    for (int i = 0; i < ray.steps; i++) {
-        // Advance the cursor using delta
-        cursor += ray.delta;
+  float maxValue = 0.0;
 
-        // Read the current value
-        density = readVolume(cursor);
-        if (density > lowCut && density < highCut) {
-            maxDensity = max(density, maxDensity);
-        }
-    }
+  // Walk N steps, advancing our cursor
+  // This loop is literaly our ray advancing through the 3D space.
+  for (int i = 0; i < ray.steps; i++) {
+    // Advance the cursor using delta on each iteration
+    cursor += ray.delta;
 
-    maxDensity -= lowCut;
-    maxDensity /= highCut-lowCut;
-    gl_FragColor = readColormap(maxDensity);
+    // Read the current value from the medical image
+    float value = readVolume(cursor);
+
+    // Update maxValue, taking the maximun value
+    maxValue = max(value, maxValue);
+  }
+
+  // Return the final pixel color based on the maxValue recorded.
+  // In this case, we are setting the R(red), G(green) and B(blue) components to the same value (maxValue),
+  // so the final color will be greyscaled.
+
+  // This last 1.0, correspond to the Alpha(transparency) component.
+  maxValue -= lowCut;
+  maxValue /= highCut-lowCut;
+  gl_FragColor = readColormap(maxValue);
 }
 `;
 

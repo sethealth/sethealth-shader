@@ -67,6 +67,7 @@ header {
   top: 0;
   bottom: 0;
   backdrop-filter: blur(20px) saturate(2.5);
+  overflow: auto;
 }
 
 .colormap::part(colormap) {

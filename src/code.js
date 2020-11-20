@@ -28,14 +28,11 @@ void main() {
     float value = readVolume(cursor);
 
     // Update maxValue, taking the maximun value
-    maxValue = max(value, maxValue);
+    if (value > lowCut && value < highCut) {
+      maxValue = max(value, maxValue);
+    }
   }
 
-  // Return the final pixel color based on the maxValue recorded.
-  // In this case, we are setting the R(red), G(green) and B(blue) components to the same value (maxValue),
-  // so the final color will be greyscaled.
-
-  // This last 1.0, correspond to the Alpha(transparency) component.
   maxValue -= lowCut;
   maxValue /= highCut-lowCut;
   gl_FragColor = readColormap(maxValue);
@@ -142,8 +139,10 @@ void main() {
 
 `
 
-export default {
+const SHADERS = {
     'max-intensity': MAX_INTENSITY,
     'basic': BASIC,
     'lighting': LIGHTING
 };
+
+export default SHADERS;

@@ -25,9 +25,8 @@ const COLORMAP = {
     {
       name: "Tendons",
       from: 85,
-      to: 90,
+      to: 115,
       color: [255, 90, 152, 255],
-      disabled: true,
     },
     {
       name: "Tissues",
@@ -39,7 +38,7 @@ const COLORMAP = {
       name: "Bone",
       from: 250,
       to: 1600,
-      color: [254, 252, 231, 150],
+      color: [254, 252, 231, 170],
     },
     {
       name: "Metal",

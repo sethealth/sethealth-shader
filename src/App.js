@@ -7,7 +7,7 @@ import useDebounce from './debounce';
 import * as sethealth from '@sethealth/core';
 import ResizePanel from "react-resize-panel";
 
-const MEDICAL_IMAGE = "https://public1-eu-sethealth.ams3.cdn.digitaloceanspaces.com/public/ankle.nrrd.gz";
+const MEDICAL_IMAGE = "https://public.sethealth.app/ankle.nrrd.gz";
 
 const prefix = "#";
 

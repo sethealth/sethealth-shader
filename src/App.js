@@ -38,7 +38,7 @@ const COLORMAP = {
       name: "Bone",
       from: 250,
       to: 1600,
-      color: [254, 252, 231, 170],
+      color: [254, 252, 231, 200],
     },
     {
       name: "Metal",
@@ -183,8 +183,8 @@ export default function App() {
               ambientLight={ambientLight}
               diffuseLight={directLight}
               specularLight={specularLight}
-              lowCut={cutLow}
-              highCut={cutHigh}
+              cutLow={cutLow}
+              cutHigh={cutHigh}
               colormap={colormap}
               fragmentShader={debouncedShader}
               workspace={workspace}
@@ -216,7 +216,7 @@ export default function App() {
                 min={MIN_HU}
                 max={MAX_HU}
                 value={cutLow}
-                onSetChange={(ev) => {console.log(ev);setCutLow(ev.detail)}}
+                onSetChange={(ev) => setCutLow(ev.detail)}
               />
               <SetInputRange
                 header="High cut"

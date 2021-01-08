@@ -28,13 +28,13 @@ void main() {
     float value = readVolume(cursor);
 
     // Update maxValue, taking the maximun value
-    if (value > lowCut && value < highCut) {
+    if (value > cutLow && value < cutHigh) {
       maxValue = max(value, maxValue);
     }
   }
 
-  maxValue -= lowCut;
-  maxValue /= highCut-lowCut;
+  maxValue -= cutLow;
+  maxValue /= cutHigh-cutLow;
   gl_FragColor = readColormap(maxValue);
 }
 `;

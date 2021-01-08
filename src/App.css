@@ -51,12 +51,6 @@ header {
 }
 
 .sidemenu {
-  --color-background: rgba(0, 0, 0, 1);
-  --color-background-contrast: rgba(255, 255, 255, 1);
-
-  --color-middle: rgba(40, 38, 44, 1);
-  --color-middle-contrast: rgba(255, 255, 255, 1);
-
   background: #00000073;
   width: 195px;
   color: white;

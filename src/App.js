@@ -1,5 +1,5 @@
 import './App.css';
-import { ControlledEditor } from "@monaco-editor/react";
+import Editor from "@monaco-editor/react";
 import { SetControlColormap, SetIcon, SetInputRange, SetProgressBar, SetViewVolumetric } from '@sethealth/react';
 import { useEffect, useMemo, useState } from 'react';
 import SHADERS from './code';
@@ -161,7 +161,7 @@ export default function App() {
             <ResizePanel direction="e" style={{
               width: '50%',
             }} >
-              <ControlledEditor
+              <Editor
                 width="100%"
                 height="100%"
                 language="cpp"
@@ -171,7 +171,7 @@ export default function App() {
                     enabled: false
                   }
                 }}
-                onChange={(_, value) => {
+                onChange={(value) => {
                   setShaderName("custom");
                   setShader(value);
                 }}

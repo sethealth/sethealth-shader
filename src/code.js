@@ -44,7 +44,7 @@ const LIGHTING = `
 void main() {
   Ray ray = computeRay();
 
-  gl_FragDepth = 1.0;
+  setDepth(1.0);
 
   if (ray.outside) {
     gl_FragColor = vec4(0.0);
@@ -71,7 +71,7 @@ void main() {
         maxAlpha = pxColor.a;
       }
       if (surfaceColor.a > 0.99) {
-        gl_FragDepth = depthAt(cursor);
+        setDepthAt(cursor);
         surfaceColor.a = 1.0;
         break;
       }
@@ -103,7 +103,7 @@ const BASIC = `
 void main() {
   Ray ray = computeRay();
 
-  gl_FragDepth = 1.0;
+  setDepth(1.0);
 
   if (ray.outside) {
     gl_FragColor = vec4(0.0);
@@ -126,7 +126,7 @@ void main() {
       surfaceColor.a += alpha;
 
       if (surfaceColor.a > 0.99) {
-        gl_FragDepth = depthAt(cursor);
+        setDepthAt(cursor);
         surfaceColor.a = 1.0;
         break;
       }

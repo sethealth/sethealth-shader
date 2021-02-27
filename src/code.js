@@ -1,4 +1,3 @@
-
 const MAX_INTENSITY = `
 void main() {
   // Internally this function takes all the relevant input and
@@ -38,7 +37,6 @@ void main() {
   gl_FragColor = readColormap(maxValue);
 }
 `;
-
 
 const LIGHTING = `
 void main() {
@@ -97,7 +95,7 @@ void main() {
       + specular*specularLight
     ) * surfaceColor.rgb, surfaceColor.a);
 }
-`
+`;
 
 const BASIC = `
 void main() {
@@ -136,12 +134,12 @@ void main() {
   gl_FragColor = vec4(surfaceColor.rgb, 1.0);
 }
 
-`
+`;
 
 const SHADERS = {
-    'max-intensity': MAX_INTENSITY,
-    'basic': BASIC,
-    'lighting': LIGHTING
+  "max-intensity": MAX_INTENSITY,
+  basic: BASIC,
+  lighting: LIGHTING,
 };
 
 export default SHADERS;

@@ -1,13 +1,19 @@
-import './App.css';
+import "./App.css";
 import Editor from "@monaco-editor/react";
-import { SetControlColormap, SetIcon, SetInputRange, SetProgressBar, SetViewVolumetric } from '@sethealth/react';
-import { useEffect, useMemo, useState } from 'react';
-import SHADERS from './code';
-import useDebounce from './debounce';
-import * as sethealth from '@sethealth/core';
+import {
+  SetControlColormap,
+  SetIcon,
+  SetInputRange,
+  SetProgressBar,
+  SetViewVolumetric,
+} from "@sethealth/react";
+import { useEffect, useMemo, useState } from "react";
+import SHADERS from "./code";
+import useDebounce from "./debounce";
+import * as sethealth from "@sethealth/core";
 import ResizePanel from "react-resize-panel";
 
-const MEDICAL_IMAGE = "https://public.sethealth.app/ankle.nrrd.gz";
+const MEDICAL_IMAGE = "https://public.sethealth.app/ankle-lowres.nrrd.gz";
 
 const prefix = "#";
 
@@ -60,7 +66,7 @@ const getInitialState = () => {
       shaderName: fragment,
       colormap: COLORMAP,
       ambientLight: 0.25,
-      directLight: 0.60,
+      directLight: 0.6,
       specularLight: 0.24,
       cutLow: MIN_HU,
       cutHigh: MAX_HU,
@@ -68,7 +74,7 @@ const getInitialState = () => {
   } else {
     return JSON.parse(atob(fragment));
   }
-}
+};
 
 const getFragment = () => {
   const fragment = window.location.hash;
@@ -79,7 +85,6 @@ const getFragment = () => {
 };
 
 export default function App() {
-
   const state = useMemo(() => getInitialState(), []);
   const [workspace, setWorkspace] = useState(undefined);
   const [loading, setLoading] = useState();
@@ -95,10 +100,13 @@ export default function App() {
 
   useEffect(() => {
     async function load() {
-      const result = await sethealth.med.loadFromSource({
-        type: 'nrrd',
-        input: MEDICAL_IMAGE,
-      }, (progress) => setLoading(progress));
+      const result = await sethealth.med.loadFromSource(
+        {
+          type: "nrrd",
+          input: MEDICAL_IMAGE,
+        },
+        (progress) => setLoading(progress)
+      );
       if (!result.error) {
         const handler = result.value[0];
         const workspace = await sethealth.workspace.create(handler);
@@ -124,52 +132,74 @@ export default function App() {
     } else {
       window.location.hash = prefix + shaderName;
     }
-  }, [shaderName, colormap, ambientLight, directLight, specularLight, cutLow, cutHigh, shader]);
+  }, [
+    shaderName,
+    colormap,
+    ambientLight,
+    directLight,
+    specularLight,
+    cutLow,
+    cutHigh,
+    shader,
+  ]);
 
   return (
     <div className="App">
-        <header>
-          <a href="https://set.health" className="logo" >
-            <SetIcon name="sethealth"/>
-          </a>
-          Sethealth Shader Playground
-          {workspace && (
-            <select value={shaderName} onChange={(ev) => {
+      <header>
+        <a href="https://set.health" className="logo">
+          <SetIcon name="sethealth" />
+        </a>
+        Sethealth Shader Playground
+        {workspace && (
+          <select
+            value={shaderName}
+            onChange={(ev) => {
               const value = ev.target.value;
               const code = SHADERS[value];
               if (code) {
                 setShaderName(value);
                 setShader(code);
               }
-            }}>
-              <option value="max-intensity">Max-intensity</option>
-              <option value="basic">Basic</option>
-              <option value="lighting">Lighting</option>
-              <option value="custom" disabled>Custom</option>
-            </select>
-          )}
-          <nav className="top-menu">
-            <a className="link" target="_blank" rel="noreferrer" href="https://docs.set.health/docs/guides/custom-shaders">
-              <SetIcon name="document"></SetIcon>
-              Docs
-            </a>
-          </nav>
-        </header>
+            }}
+          >
+            <option value="max-intensity">Max-intensity</option>
+            <option value="basic">Basic</option>
+            <option value="lighting">Lighting</option>
+            <option value="custom" disabled>
+              Custom
+            </option>
+          </select>
+        )}
+        <nav className="top-menu">
+          <a
+            className="link"
+            target="_blank"
+            rel="noreferrer"
+            href="https://docs.set.health/docs/guides/custom-shaders"
+          >
+            <SetIcon name="document"></SetIcon>
+            Docs
+          </a>
+        </nav>
+      </header>
       {workspace && (
         <>
           <div className="panel">
-            <ResizePanel direction="e" style={{
-              width: '50%',
-            }} >
+            <ResizePanel
+              direction="e"
+              style={{
+                width: "50%",
+              }}
+            >
               <Editor
                 width="100%"
                 height="100%"
                 language="cpp"
                 options={{
-                  'scrollBeyondLastLine': false,
-                  'minimap': {
-                    enabled: false
-                  }
+                  scrollBeyondLastLine: false,
+                  minimap: {
+                    enabled: false,
+                  },
                 }}
                 onChange={(value) => {
                   setShaderName("custom");
@@ -186,6 +216,7 @@ export default function App() {
               cutLow={cutLow}
               cutHigh={cutHigh}
               colormap={colormap}
+              filterVolume={false}
               fragmentShader={debouncedShader}
               workspace={workspace}
             />
@@ -230,7 +261,7 @@ export default function App() {
         </>
       )}
       {loading !== undefined && loading < 1.0 && (
-        <SetProgressBar value={loading}/>
+        <SetProgressBar value={loading} />
       )}
     </div>
   );
